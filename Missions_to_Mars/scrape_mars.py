@@ -16,16 +16,14 @@ def scrape():
     browser = init_browser
     mars_data = {}
     # Nasa Mars News
-        # URL of page to be scraped
+    # URL of page to be scraped
     url = 'https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest'
     browser.visit(url)
     html = browser.html
     news_soup = bs(html, 'html.parser')
 
     news_title = news_soup.find_all('div', class_='content_title')[0].text
-    news_p = news_soup.find_all('div', class_='article_teaser_body')[0].text
-    print(news_title)
-    print(news_p)
+    news_paragraph = news_soup.find_all('div', class_='article_teaser_body')[0].text
 
 
     # JPL Mars
@@ -37,12 +35,12 @@ def scrape():
 
     html = browser.html
     soup = bs(html,"html.parser")
-    print(soup.prettify())
+ 
     #image
     featured_image  = soup.find('article', class_="carousel_item")['style'].replace('background-image: url(','').replace(');', '')[1:-1]
     main_url = 'https://www.jpl.nasa.gov'
     featured_image_url = main_url + featured_image
-    print(f"featured_image_url: {featured_image_url}")
+ 
 
 
     # Mars Facts
@@ -52,7 +50,6 @@ def scrape():
 
     facts = pd.read_html(base_url2)
     facts_df = facts[0]
-    print("Mars Planet Facts")
     facts_df
 
     mars_facts = facts_df.rename(columns={0 : "Features", 1 : "Value"}).set_index(["Features"])
@@ -94,7 +91,11 @@ def scrape():
     hemisphere_imgs_urls
 
     mars_data = {
-        "ne"
+        "news_title": news_title,
+        "news_paragraph": news_paragraph,
+        "featured_image_url": featured_image_url,
+        "mars_facts": mars_facts,
+        "hemisphere_imgs_urls": hemisphere_imgs_urls
     }
 
-    browser.quit()
+    return mars_data
