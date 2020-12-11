@@ -6,18 +6,15 @@ from splinter import Browser
 import time
 from webdriver_manager.chrome import ChromeDriverManager
 
-def init_browser():
-    executable_path = {'executable_path': ChromeDriverManager().install()}
-    browser = Browser('chrome', **executable_path, headless=False)
-
 
 
 def scrape():
-    browser = init_browser
     mars_data = {}
+
     # Nasa Mars News
-    # URL of page to be scraped
     url = 'https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest'
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    browser = Browser('chrome', **executable_path, headless=False)
     browser.visit(url)
     html = browser.html
     news_soup = bs(html, 'html.parser')
@@ -54,7 +51,6 @@ def scrape():
 
     mars_facts = facts_df.rename(columns={0 : "Features", 1 : "Value"}).set_index(["Features"])
     mars_facts
-    mars_table = mars_facts.to_html()
 
 
     # Mars Hemisphere
