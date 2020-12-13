@@ -32,39 +32,40 @@
         </div>
       </div>
     </div>
+  </div>
 
-   <!-- <div class="row">
-      <div class="col-md-8 border">
-        <h2 class=""><u>Featured Mars Image</u></h2>
-        </br>
-        <img src="{{mars.featured_image_url}}" alt="Features Mars Image">
-      </div>
-
+  <div class="row">
+    <div class="col-md-6 border">
+      <h2 class="text-center"><u>Featured Mars Image</u></h2>
+      </br>
+      <img src="{{mars.featured_image_url}}" alt="Features Mars Image" height="800" width="800">
+    </div>
+    <br>
+    <div class="col-md-6">
       <div class="border">
-        <h5>Mars Facts</h5>
-        {{ mars.mars_table | safe }}
+        <h5 align='center'>Mars Facts</h5>
+        <hr>
+        <table>{{ mars.mars_facts | safe}}</table>
       </div>
     </div>
   </div>
-  <hr>
-   <div class="row" id="mars-hemispheres" style="margin-top:80px;">
+    <hr>
+    <div class="row" id="mars-hemispheres" style="margin-top:80px;">
       <div class="page-header">
-        <h2 class="text-center">Mars Hemispheres</h2>
+        <h2 class="text-center" align='right'>Mars Hemispheres</h2>
       </div>
-      {% for hemisphere in mars.hemisphere_imgs_urls %}
-        <div class="col-md-6">
-            <div class="thumbnail">
-            if images is False/None/non-existent, then default to error message 
-            <img src="{{hemisphere_imgs_urls.img_url}}"
-                alt="...">
-            <div class="caption">
-                <h3>{{hemisphere_imgs_urls.title}}</h3>
-            </div>
-            </div>
+      {% for hemisphere in mars.hemisphere_dict %}
+      <div class="col-md-6">
+        <div class="thumbnail">
+          <!--if images is False/None/non-existent, then default to error message-->
+          <img src="{{hemisphere_dict.img}}" alt="...">
+          <div class="caption">
+            <h3>{{hemisphere_dict.title}}</h3>
+          </div>
         </div>
+      </div>
       {% endfor %}
     </div>
-  </div>-->
 
 
 </body>
