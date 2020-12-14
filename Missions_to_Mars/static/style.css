@@ -5,6 +5,14 @@ body{
     background-color: rgba(212, 129, 4, 0.788);
 }
 
+.table td{
+    background-color: darkgrey;
+}
+
+.table th{
+    background-color: darkgrey;
+}
+
 u{
     color: rgba(212, 129, 4, 0.788);
 }
