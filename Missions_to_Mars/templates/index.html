@@ -11,6 +11,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel = "stylesheet" href = "..\static\style.css">
 
 </head>
 
@@ -26,7 +27,7 @@
     <div class="col-md-12">
       <div class="media">
         <div class="media-body">
-          <h2>Latest Mars News</h2>
+          <h2><u>Latest Mars News</u></h2>
           <h4 class="media-heading">{{mars.news_title}}</h4>
           <p>{{mars.news_paragraph}}</p>
         </div>
@@ -37,35 +38,36 @@
   <div class="row">
     <div class="col-md-6 border">
       <h2 class="text-center"><u>Featured Mars Image</u></h2>
-      </br>
-      <img src="{{mars.featured_image_url}}" alt="Features Mars Image" height="800" width="800">
+      <hr>
+      <img src="{{mars.featured_image_url}}" alt="Features Mars Image" height=80% width=100%>
     </div>
     <br>
     <div class="col-md-6">
-      <div class="border">
-        <h5 align='center'>Mars Facts</h5>
+      <div class="border table table-striped" align='center'>
+        <h2 align='center'><u>Mars Facts</u></h2>
         <hr>
         <table>{{ mars.mars_facts | safe}}</table>
       </div>
     </div>
-  </div>
-    <hr>
+
     <div class="row" id="mars-hemispheres" style="margin-top:80px;">
-      <div class="page-header">
-        <h2 class="text-center" align='right'>Mars Hemispheres</h2>
+      <div class="page-header col-md-12">
+        <h2 class="text-center"><u>Mars Hemispheres</u></h2>
       </div>
-      {% for hemisphere in mars.hemisphere_dict %}
-      <div class="col-md-6">
-        <div class="thumbnail">
-          <!--if images is False/None/non-existent, then default to error message-->
-          <img src="{{hemisphere_dict.img}}" alt="...">
-          <div class="caption">
-            <h3>{{hemisphere_dict.title}}</h3>
-          </div>
+      {% for hemisphere in mars.hemisphere_imgs_urls %}
+        <div class="col-md-6">
+            <div class="thumbnail" align='center' >
+            <!-- if images is False/None/non-existent, then default to error message -->
+            <img src="{{ hemisphere.Image_URL | default('error.png', true)}}"
+                alt="{{hemisphere.Title}}" height=50% width=50%>
+            <div class="caption" align='center'>
+                <h3>{{hemisphere.Title}}</h3>
+            </div>
+            </div>
         </div>
-      </div>
       {% endfor %}
     </div>
+ 
 
 
 </body>

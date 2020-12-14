@@ -44,12 +44,16 @@ def scrape():
     mars_dict = {}
     
     mars_facts_url = 'https://space-facts.com/mars/'
-    mft = pd.read_html(mars_facts_url)
-    mars_table = mft[0].set_index(0)[1].to_dict()
+    mars_facts_table = pd.read_html(mars_facts_url)
+    mars_table = mars_facts_table[0].set_index(0)[1].to_dict()
     
-    mars_dict['mars_facts'] = mars_table
+    mars_dict['mars_table'] = mars_table
 
     # Mars Hemisphere
+
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    browser = Browser('chrome', **executable_path, headless=True)
+
     base_url3= 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(base_url3)
     time.sleep(5)
@@ -58,7 +62,7 @@ def scrape():
     soup = bs(html3, 'html.parser')
 
     info = soup.find('div', class_='collapsible results')
-    print(info.prettify())
+
     hemispheres=info.find_all('a')
     hemisphere_imgs_urls = []
 
@@ -79,7 +83,8 @@ def scrape():
             hemisphere_dict["Image_URL"]=img
             hemisphere_imgs_urls.append(hemisphere_dict)
             browser.back()
-
+        
+    mars_data['hemisphere_imgs_urls'] = hemisphere_imgs_urls
     browser.quit()
 
     mars_data = {
@@ -87,8 +92,7 @@ def scrape():
         "news_paragraph": news_paragraph,
         "featured_image_url": featured_image_url,
         "mars_facts": mars_table,
-        "hemisphere_imgs_urls": hemisphere_imgs_urls,
-        "hemisphere_dict": hemisphere_dict
+        "hemisphere_imgs_urls": hemisphere_imgs_urls
     }
 
     return mars_data
