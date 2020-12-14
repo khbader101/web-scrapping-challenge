@@ -41,13 +41,14 @@ def scrape():
 
 
     # Mars Facts
-    mars_dict = {}
     
     mars_facts_url = 'https://space-facts.com/mars/'
     mars_facts_table = pd.read_html(mars_facts_url)
-    mars_table = mars_facts_table[0].set_index(0)[1].to_dict()
+    mars_facts = mars_facts_table[0]
+    mars_facts.columns = ["Description", "Value"]
+    mars_table = mars_facts.to_html()
     
-    mars_dict['mars_table'] = mars_table
+    mars_data['mars_table'] = mars_table
 
     # Mars Hemisphere
 
@@ -91,7 +92,7 @@ def scrape():
         "news_title": news_title,
         "news_paragraph": news_paragraph,
         "featured_image_url": featured_image_url,
-        "mars_facts": mars_table,
+        "mars_table": mars_table,
         "hemisphere_imgs_urls": hemisphere_imgs_urls
     }
 
